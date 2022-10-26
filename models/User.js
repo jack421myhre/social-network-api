@@ -6,22 +6,26 @@ const userSchema = new Schema(
             type: String,
             unique: true,
             required: true,
-            trim: true
+            trim: true,
         },
         email: {
             type: String,
             unique: true,
             required: true,
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email.']
+            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
         },
-        thoughts: [{
-            type: Schema.Types.ObjectId,
-            ref: 'thought'
-        }],
-        friends: [{
-            type: Schema.Types.ObjectId,
-            ref: 'user'
-        }],
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'thought',
+            },
+        ],
+        friends: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'user',
+            },
+        ],
     },
     {
         toJSON: {
@@ -32,8 +36,8 @@ const userSchema = new Schema(
 );
 
 userSchema
-    .virtual('reactionCount')
-    .get(() => {
+    .virtual('friendCount')
+    .get(function () {
         return this.friends.length;
     });
 
